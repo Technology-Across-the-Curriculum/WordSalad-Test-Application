@@ -1,0 +1,18 @@
+rob
+two models
+some long sentence, might suck?
+Project Gutenberg
+Hello there, my name is Nathan Healea.
+Here I'm testing to train the Gibberish Detector to better detect gibberish
+Here I'm testing to train the Gibberish Detector to better detect gibberish.
+The other week, during my Ruby Tuesday on a Tuesday adventure, I bought a new jean jacket.
+Well, I guess it's not a new jean jacket I did buy it from Goodwill.
+So the other week on my Ruby Tuesday on a Tuesday adventure I bought an old jean jacket.
+I think it was in the men's section that I picked it up.
+I decided to quit the recruitment.
+It was too stressful for too little in return.
+I found out I'm not a fan of having mental breakdowns three or four times a week.
+Anyway, so now I will write using a normal voice.
+I went to a dance for dance club last night.
+That was fun! We learned the two step.
+It's a country style dance that's beats go "quick, quick, slow, quick, quick, slow."
