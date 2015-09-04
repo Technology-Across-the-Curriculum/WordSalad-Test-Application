@@ -1,5 +1,6 @@
 <?php
     require(APP . DIRECTORY_SEPARATOR . 'core' . DIRECTORY_SEPARATOR . 'model.php');
+
     /**
      * Created by PhpStorm.
      * User: Nathan
@@ -22,59 +23,103 @@
             require APP . 'model/WordSaladModel.php';
             $this->WordSalad = new WordSalad();
         }
-
+        /* =================================
+                Setters Function
+        ================================== */
         /**
-         * Added a new test to ws_test
+         * Added a new test to ws_test table
          */
-        private function SetTestInfo(){
+        private function SetTestInfo()
+        {
             $sql = "INSERT INTO ws_test(threshold) VALUES (:threshold)";
             $query = $this->db->prepare($sql);
             $threshold = $this->WordSalad->GetAverage();
             $parameters = array(':threshold' => $threshold);
             $query->execute($parameters);
         }
-        private function SetScore($id,$score)
+
+        /**
+         * Sets the score of a giving id(ws_gibberish.id)
+         * to ws_score table.
+         * @param $id
+         * @param $score
+         */
+        private function SetScore($id, $score)
         {
             $isGibberish = null;
             $threshold = $this->CurrentTest->threshold;
             $sql = "INSERT INTO ws_score(ws_test_id,ws_gibberish_id,gibberish_score,is_gibberish) VALUE (:test_id, :gibberish_id, :score, :is_gibberish)";
             $query = $this->db->prepare($sql);
-            if($score >= $threshold){
+            if ($threshold <= $score) {
+                $isGibberish = false;
+            } else {
                 $isGibberish = true;
             }
-            else{
-                $isGibberish = false;
-            }
-            $parameters = array(':test_id' =>$this->CurrentTest->id,':gibberish_id' => $id, ':score' => $score, 'is_gibberish' =>$isGibberish);
+            $parameters = array(':test_id' => $this->CurrentTest->id, ':gibberish_id' => $id, ':score' => $score, 'is_gibberish' => $isGibberish);
             $query->execute($parameters);
 
         }
 
+        /* =================================
+                Getters Function
+        ================================== */
+        public function GetAllTest(){
+            $sql = "SELECT * FROM ws_test";
+            $query = $this->db->prepare($sql);
+            $query->execute();
+            return $query->fetchAll();
+        }
         /**
          * Retrieves the last test added to the database
          * true for found
          * false for not found
          * @return bool
-
          */
-        private function GetCurrentTest(){
+        public function GetCurrentTest()
+        {
             $sql = "SELECT id , test_time, threshold FROM ws_test ORDER BY id DESC LIMIT 1";
             $query = $this->db->prepare($sql);
             $query->execute();
             $test = $query->fetchAll();
             $this->CurrentTest = $test[0];
-            if($this->CurrentTest != null)
-            {
+            if ($this->CurrentTest != null) {
                 return true;
             }
+
             return false;
+        }
+        // TODO Will need to be change to gets the score of any test
+        public function GetScores()
+        {
+            $sql = "SELECT ws_gibberish.body_text,ws_score.gibberish_score,ws_score.is_gibberish
+                    FROM ws_gibberish
+                    INNER JOIN ws_score
+                    on ws_gibberish.id = ws_score.ws_gibberish_id
+                    WHERE ws_test_id = :test_id";
+            $query = $this->db->prepare($sql);
+            $parameters = array(':test_id' => $this->CurrentTest->id);
+            $query->execute($parameters);
+
+            return $query->fetchAll();
         }
 
         /**
-         * Test control data to make sure Gibberish Detector is working
+         * Gets the Threshold hold of the current test froms database.
+         * @return float
+         */
+        public function GetThreshold(){
+            return $this->WordSalad->GetAverage();
+        }
+
+
+        /* =================================
+                Main Methods
+        ================================== */
+        /**
+         * Test control data to make sure Gibberish Detector is working properly
          * @return Array() $resultArray
          */
-        public function TestControlData()
+        public function ControlData()
         {
 
             //Test Gibberish Data
@@ -106,10 +151,18 @@ The markov chain first \'trains\' or \'studies\' a few MB of English text, recor
 
             return $resultArray;
         }
+
+        /**
+         * Test our Sample Text with the Gibberish Detector
+         * Records gibberish score of each Text entry
+         * return true if all scores where recorded and method worked properly
+         * return false if something failed or went wrong
+         * @return bool
+         */
         public function DatabaseData()
         {
             self::SetTestInfo();
-            if(self::GetCurrentTest() != false) {
+            if (self::GetCurrentTest() != false) {
                 $sql = "SELECT * FROM ws_gibberish";
                 $query = $this->db->prepare($sql);
                 $query->execute();
@@ -119,7 +172,6 @@ The markov chain first \'trains\' or \'studies\' a few MB of English text, recor
                     "text"  => Array(),
                     "score" => Array()
                 );
-
                 foreach ($results as $row) {
                     $score = $this->WordSalad->Test($row->body_text, $this->WordSalad->GetMatrix(), true);
                     array_push($resultArray['text'], $row->body_text);
@@ -127,9 +179,11 @@ The markov chain first \'trains\' or \'studies\' a few MB of English text, recor
                     self::SetScore($row->id, $score);
                     unset($score);
                 }
-
-                return $resultArray;
+                $testData = self::GetScores();
+                if ($testData != null) {
+                    return true;
+                }
             }
-            return null;
+            return false;
         }
     }

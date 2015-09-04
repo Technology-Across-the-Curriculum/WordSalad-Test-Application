@@ -30,10 +30,10 @@
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">Testing<b class="caret"></b></a>
+                    <a class="dropdown-toggle" href="<?php echo URL; ?>TestController/index">Testing<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="<?php echo URL; ?>TestController">Move Table</a>
+                            <a href="<?php echo URL; ?>TestController/displayScores">Display Current Scores</a>
                         </li>
                         <li>
                             <a href="<?php echo URL; ?>TestController/controlTest">Test Control Data</a>

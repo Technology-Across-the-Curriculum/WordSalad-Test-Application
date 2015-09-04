@@ -5,3 +5,6 @@ out
 gen
 .idea/deployment.xml
 .idea/dictionaries/Nathan.xml
+
+# Project Files
+/application/config/config.php
