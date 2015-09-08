@@ -53,8 +53,8 @@ define('URL', URL_PROTOCOL . URL_DOMAIN . URL_SUB_FOLDER);
  */
     define('DB_TYPE', 'mysql');
     define('DB_HOST', 'localhost');
-    define('DB_NAME', 'Database Name');
-    define('DB_USER', 'Dabase Username');
-    define('DB_PASS', 'Database Password');
+    define('DB_NAME', 'Database');
+    define('DB_USER', 'User');
+    define('DB_PASS', 'Password');
     define('DB_CHARSET', 'utf8');
 

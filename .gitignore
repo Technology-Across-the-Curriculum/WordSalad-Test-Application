@@ -8,3 +8,5 @@ gen
 
 # Project Files
 /application/config/config.php
+application/config/config.php
+npm-debug.log

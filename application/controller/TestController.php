@@ -46,4 +46,20 @@
                 header('location: ' . URL . 'TestController/index');
             }
         }
+        public function testScores($test_id){
+            if(isset($test_id)){
+                $results = $this->model->GetScores($test_id);
+                if(isset($results))
+                {
+                    $threshold = $this->model->GetThreshold($test_id);
+                    require APP . 'view/_templates/header.php';
+                    require APP . 'view/_templates/navigation.php';
+                    require APP . 'view/test/dispalyscores.php';
+                    require APP . 'view/_templates/footer.php';
+                }
+            }
+            else{
+                header('location: ' . URL . 'TestController/index');
+            }
+        }
     }
