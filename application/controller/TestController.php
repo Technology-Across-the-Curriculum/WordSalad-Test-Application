@@ -18,6 +18,9 @@
             require APP . 'view/test/index.php';
             require APP . 'view/_templates/footer.php';
         }
+        public function controlTest(){
+            header('location: ' . URL . 'TestController/index');
+        }
         public function databaseTest()
         {
             $result = $this->model->DatabaseData();
@@ -61,5 +64,11 @@
             else{
                 header('location: ' . URL . 'TestController/index');
             }
+        }
+        public function deleteTest($test_id){
+            if(isset($test_id)){
+                $this->model->DeleteTest($test_id);
+            }
+            header('location: ' . URL . 'TestController/index');
         }
     }

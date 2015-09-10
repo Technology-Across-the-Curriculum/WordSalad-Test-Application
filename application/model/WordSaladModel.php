@@ -169,9 +169,9 @@
             ))) > 0;
         }
 
-        /* ============================================
-                        Getter methods
-        ============================================ */
+        /* =================================
+                Getters Function
+        ================================== */
 
         /**
          * return the threshold of Gibberish Detector
@@ -198,9 +198,9 @@
         }
         public function GetMatrix(){ return $this->Matrix; }
 
-        /* ============================================
-                        Testing Helpers
-        ============================================ */
+        /* =================================
+                  Testing Helpers
+        ================================== */
         public function Normalize($line){
             return $this->_normalise($line);
         }

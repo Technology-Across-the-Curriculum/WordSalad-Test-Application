@@ -10,6 +10,7 @@
 
     <!-- Bootsrtap JavaScript -->
     <script src="<?php echo URL; ?>js/bootstrap.js"></script>
+    <script src="<?php echo URL; ?>js/bootstrap-table.js"></script>
     <!-- our JavaScript -->
     <script src="<?php echo URL; ?>js/application.js"></script>
 </body>

@@ -10,3 +10,6 @@ gen
 /application/config/config.php
 application/config/config.php
 npm-debug.log
+application/config/config.php
+application/config/config.php
+application/model/PspellModel.php

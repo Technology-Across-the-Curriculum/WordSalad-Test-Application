@@ -33,9 +33,6 @@
                     <a class="dropdown-toggle" href="<?php echo URL; ?>TestController/index">Testing<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="<?php echo URL; ?>TestController/displayScores">Display Current Scores</a>
-                        </li>
-                        <li>
                             <a href="<?php echo URL; ?>TestController/controlTest">Test Control Data</a>
                         </li>
                         <li>

@@ -89,7 +89,7 @@
             return false;
         }
         // TODO Will need to be change to gets the score of any test
-        public function GetScores($test_id)
+        public function GetScores($test_id = null)
         {
             $sql = "SELECT ws_gibberish.body_text,ws_score.gibberish_score,ws_score.is_gibberish
                     FROM ws_gibberish
@@ -97,7 +97,13 @@
                     on ws_gibberish.id = ws_score.ws_gibberish_id
                     WHERE ws_test_id = :test_id";
             $query = $this->db->prepare($sql);
-            $parameters = array(':test_id' => $test_id);
+            if(isset($test_id)) {
+
+                $parameters = array(':test_id' => $test_id);
+            }
+            else{
+                $parameters = array(':test_id' => $this->CurrentTest->id);
+            }
             $query->execute($parameters);
 
             return $query->fetchAll();
@@ -199,5 +205,12 @@ The markov chain first \'trains\' or \'studies\' a few MB of English text, recor
                 }
             }
             return false;
+        }
+
+        public function DeleteTest($test_id){
+            $sql = "DELETE FROM ws_test WHERE id = :test_id";
+            $query = $this->db->prepare($sql);
+            $parameters = array(':test_id' => $test_id);
+            $query->execute($parameters);
         }
     }

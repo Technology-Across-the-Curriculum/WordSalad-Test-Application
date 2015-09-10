@@ -2,10 +2,11 @@
     margin: 75px 10px;
 }
 .text-output{
+    max-width:500px;
+    max-height:100px;
     overflow-x: hidden;
     overflow-y: hidden;
-    height: 150px;
-    padding: 10px;
+
 }
 .text-score{
     margin: 3px;
